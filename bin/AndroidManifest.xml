@@ -55,7 +55,40 @@
         <activity android:name="ActivityView2"></activity>
         <activity android:name="ActivityView3"></activity>
         
+ <activity android:name="com.onboardapp.gps.BluetoothGpsActivity"
+                  
+                  >
+           
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter" />
+        </activity>
 
+<!--  
+		<service android:name=".BluetoothGpsProviderService" android:enabled="true" android:exported="true" android:process=":BluetoothGpsProviderService" >
+-->
+<service android:name="com.onboardapp.util.MyLocationService" android:enabled="true" android:exported="true" >
+    </service>
+		<service android:name="com.onboardapp.gps.bluetooth.provider.BluetoothGpsProviderService" android:enabled="true" android:exported="true" >
+			<intent-filter>
+				<action android:name="com.onboardapp.gps.usb.tracker.nmea.intent.action.START_TRACK_RECORDING">
+					<category android:name="android.intent.category.DEFAULT" />
+				</action>
+				<action android:name="com.onboardapp.gps.usb.tracker.nmea.intent.action.STOP_TRACK_RECORDING">
+					<category android:name="android.intent.category.DEFAULT" />
+				</action>
+				<action android:name="com.onboardapp.gps.usb.provider.nmea.intent.action.START_GPS_PROVIDER">
+					<category android:name="android.intent.category.DEFAULT" />
+				</action>
+				<action android:name="com.onboardapp.gps.usb.provider.nmea.intent.action.STOP_GPS_PROVIDER">
+					<category android:name="android.intent.category.DEFAULT" />
+				</action>
+				<action android:name="com.onboardapp.gps.usb.provider.nmea.intent.action.CONFIGURE_SIRF_GPS">
+					<category android:name="android.intent.category.DEFAULT" />
+				</action>
+			</intent-filter>			
+		</service>
 	<receiver
     android:name="com.onboardapp.StartMyServiceAtBootReceiver"
     android:enabled="true"
