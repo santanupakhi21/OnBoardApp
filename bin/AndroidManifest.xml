@@ -47,13 +47,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="LoginActivity"></activity>
-        <activity android:name="AsignCodeActivity"></activity>
-        <activity android:name="ConfirmActivity"></activity>
+        <activity android:name="LoginActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="AsignCodeActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name="ConfirmActivity" android:screenOrientation="landscape"></activity>
         
-        <activity android:name="ActivityView1"></activity>
-        <activity android:name="ActivityView2"></activity>
-        <activity android:name="ActivityView3"></activity>
+        <activity android:name="ActivityView1" android:screenOrientation="landscape"></activity>
+        <activity android:name="ActivityView2" android:screenOrientation="landscape"></activity>
+        <activity android:name="ActivityView3" android:screenOrientation="landscape"></activity>
         
  <activity android:name="com.onboardapp.gps.BluetoothGpsActivity"
                   
