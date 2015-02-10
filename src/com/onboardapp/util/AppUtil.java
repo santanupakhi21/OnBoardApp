@@ -1,5 +1,7 @@
 package com.onboardapp.util;
 
+import com.onboardapp.result.ResultRoute;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -13,6 +15,10 @@ public class AppUtil {
 	public static String route="";
 	
 	public static String status="404";
+	
+	public static ResultRoute rRoute=new ResultRoute();
+	
+	
 	public static boolean internetOnline(Context c) {
 
 		

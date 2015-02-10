@@ -30,7 +30,7 @@ public class ConfirmActivity extends Activity implements OnNotifyGetResponse{
 		setContentView(R.layout.confirm);
 		route=getIntent().getStringExtra("route");
 		System.out.println("===="+route);
-		AppUtil.route=route;
+//		AppUtil.route=route;
 		initialize();
 	}
 	private void initialize()
@@ -38,21 +38,21 @@ public class ConfirmActivity extends Activity implements OnNotifyGetResponse{
 		ll_confirm=(LinearLayout)findViewById(R.id.ll_confirm);
 		tvVehicle=(TextView)findViewById(R.id.tv_vehicle);
 		
-		
+		tvVehicle.setText(route);
 		ll_confirm.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-				startActivity(new Intent(ConfirmActivity.this,ActivityView1.class));
+				AppUtil.route=route;
+				startActivity(new Intent(ConfirmActivity.this,DownloadRoute.class));
 				
 			}
 		});
 		
-		if (AppUtil.internetOnline(ConfirmActivity.this)) {
-			String url=Constants.URL_CONFIRM_VEHICLE+route+"&latitude=52.000&longitude=51.000";
-			new AsyncTaskForConnect(url, null, ConfirmActivity.this, Constants.CONFIRM_VEHICLE, Constants.CONNECT_GET).execute();
-			}
+//		if (AppUtil.internetOnline(ConfirmActivity.this)) {
+//			String url=Constants.URL_CONFIRM_VEHICLE+route+"&latitude=52.000&longitude=51.000";
+//			new AsyncTaskForConnect(url, null, ConfirmActivity.this, Constants.CONFIRM_VEHICLE, Constants.CONNECT_GET).execute();
+//			}
 			
 	}
 	@Override

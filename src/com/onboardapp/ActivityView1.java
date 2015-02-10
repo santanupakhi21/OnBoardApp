@@ -2,6 +2,13 @@ package com.onboardapp;
 
 import java.util.ArrayList;
 
+import com.onboardapp.asynctask.AsyncTaskForConnect;
+import com.onboardapp.callback.OnNotifyGetResponse;
+import com.onboardapp.result.Result;
+import com.onboardapp.result.ResultRoute;
+import com.onboardapp.util.AppUtil;
+import com.onboardapp.util.Constants;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,7 +20,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ActivityView1 extends Activity{
+public class ActivityView1 extends Activity implements OnNotifyGetResponse{
 	LinearLayout ll_list;
 	ArrayList<String>ListStop;
 	LinearLayout ll_time;
@@ -57,5 +64,18 @@ public class ActivityView1 extends Activity{
 				
 			}
 		});
+		
+		if (AppUtil.internetOnline(ActivityView1.this)) {
+			String url=Constants.URL_DOWNLOAD_ROUTE;
+			new AsyncTaskForConnect(url, null, ActivityView1.this, Constants.DOWNLOAD_ROUTE, Constants.CONNECT_GET).execute();
+			}
+		
+	}
+
+	@Override
+	public void setOnNotifyGetResponse(Result result, int action) {
+		
+		ResultRoute rRoute=(ResultRoute)result;
+		System.out.println("==="+rRoute.ListRoute.size());
 	}
 }
