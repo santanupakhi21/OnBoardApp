@@ -14,6 +14,7 @@ import com.onboardapp.result.Result;
 import com.onboardapp.result.ResultConfirmVehicleData;
 import com.onboardapp.result.ResultRoute;
 import com.onboardapp.result.ResultVehicleData;
+import com.onboardapp.util.AppUtil;
 import com.onboardapp.util.Constants;
 
 
@@ -77,6 +78,7 @@ public class ParseResponse {
 	public void parseDownloadRoute()
 	{
 		try {
+			
 			
 			ResultRoute rRoute=new ResultRoute();
 			JSONObject obj=new JSONObject(Response);
@@ -149,6 +151,7 @@ public class ParseResponse {
 						{
 							JourneyPatternModel jModel=new JourneyPatternModel();
 							JSONObject jobj=jaJourney.getJSONObject(l);
+							jModel.setName(jobj.optString("Name"));
 							jModel.setAtcoCode(jobj.optString("AtcoCode"));
 							jModel.setBearing(jobj.optString("Bearing"));
 							jModel.setIndicator(jobj.optString("Indicator"));
@@ -161,11 +164,11 @@ public class ParseResponse {
 							bhRouteModel.ListJourneyPattern.add(jModel);
 							
 						}
-						
+						sModel.ListBusHubRouteModel.add(bhRouteModel);
 						
 					}
 					
-					
+					rData.ListService.add(sModel);
 					
 				}
 				

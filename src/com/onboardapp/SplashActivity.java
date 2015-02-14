@@ -19,7 +19,24 @@ public class SplashActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main);
 
-		new Handler().postDelayed(new Runnable() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+					Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+	                startActivity(i);
+	                finish();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
+		
+		/*new Handler().postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
@@ -28,7 +45,7 @@ public class SplashActivity extends Activity {
                 startActivity(i);
                 finish();
 			}
-		}, SPLASH_TIME_OUT);
+		}, SPLASH_TIME_OUT);*/
 
 	}
 

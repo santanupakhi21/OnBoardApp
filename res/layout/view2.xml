@@ -37,12 +37,33 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/route_number_box"
-                            android:orientation="vertical" >
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal" >
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/route_number_box" >
+
+                                    <TextView
+                                        android:id="@+id/tv_route_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="39A"
+                                        android:textColor="#FFFFFF" />
+                                </FrameLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/textView1"
+                            android:id="@+id/tv_origin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -77,17 +98,17 @@
             android:layout_height="0dp"
             android:layout_weight="70"
             android:orientation="horizontal"
-            android:weightSum="100" >
+             >
 
             <LinearLayout
+                android:id="@+id/ll_list_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="50"
-                >
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <ScrollView
-                    android:id="@+id/scrollView1"
+                    android:id="@+id/scroll_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
 
@@ -102,10 +123,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_map"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="50"  >
+                android:layout_weight="1" 
+                android:visibility="gone"
+                 >
                 
                 <RelativeLayout
                 android:layout_width="fill_parent"
@@ -117,6 +141,39 @@
         class="com.google.android.gms.maps.SupportMapFragment" /> 
                 
             </RelativeLayout>
+            </LinearLayout>
+            
+            <LinearLayout
+                android:id="@+id/ll_advert"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1" 
+                >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent" >
+
+                    <!-- <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Advertise"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+ -->
+
+                    <ImageView
+                        android:id="@+id/image_advert"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:src="@drawable/avatar_loading" 
+                        android:layout_gravity="center"
+                        android:scaleType="fitXY"/>
+
+                </FrameLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -150,12 +207,14 @@
                      android:layout_marginLeft="5dp" >
 
                      <TextView
-                         android:id="@+id/textView3"
+                         android:id="@+id/tv_mcu_advert"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
                          android:text="Abellio Ticket Holders eat for free at Frankie and Benny's" 
                          android:textSize="12dp"
-                         android:textColor="#FFFFFF"/>
+                         android:textColor="#FFFFFF"
+                         android:ellipsize="end"
+                         android:singleLine="true"/>
 
                      <TextView
                          android:id="@+id/textView4"

@@ -1,4 +1,7 @@
 package com.onboardapp.asynctask;
+import java.io.File;
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 import com.onboardapp.callback.OnNotifyGetResponse;
@@ -35,7 +38,10 @@ public class AsyncTaskForConnect  extends AsyncTask<Void, Void, Void> {
 	   super.onPreExecute();
 
 	   dialog = new ProgressDialog(contex);
-	   dialog.setMessage("Loading..");
+	   if(action_type==Constants.DOWNLOAD_ROUTE)
+		   dialog.setMessage("Downloading Routes...");
+	   else
+		   dialog.setMessage("Loading..");
 	   dialog.setTitle("");
 	   dialog.setCancelable(false);
 	   dialog.show();
@@ -64,19 +70,40 @@ public class AsyncTaskForConnect  extends AsyncTask<Void, Void, Void> {
 		  System.out.println("URL : "+url);
 //		  resultReturn=new Result();
 			ConnectionProcess cProcess=new ConnectionProcess(contex, url, json);
-			String response;
+			String response="";
 			if(connectionType==Constants.CONNECT_GET)
-				response=cProcess.getData();
+			{
+				if(action_type==Constants.DOWNLOAD_ROUTE)
+				{
+					File f=new File(AppUtil.filepath);
+					if(f.exists()){
+						response=AppUtil.readFromFile(AppUtil.filepath);
+					}
+					else
+						response=cProcess.getData();
+				}else
+					response=cProcess.getData();
+				
+				if(action_type==Constants.DOWNLOAD_ROUTE)
+				{
+					AppUtil.writeToFile(response, AppUtil.filepath);
+				}
+				
+			}
 			else if(connectionType==Constants.CONNECT_POST)
 				response=cProcess.postData();
 			else
 				response=cProcess.putData();
 			System.out.println("Response : "+response);
 			if(AppUtil.status.contains("200")){
-			
-			ParseResponse parse=new ParseResponse(action_type, response);
-			resultReturn =parse.parseData();
-			resultReturn.setStatus(Constants.statusOK);
+				if(!response.startsWith("null")){
+					ParseResponse parse=new ParseResponse(action_type, response);
+					resultReturn =parse.parseData();
+					resultReturn.setStatus(Constants.statusOK);
+				}else
+				{
+					resultReturn.setStatus(Constants.statusERROR);
+				}
 			}else{
 				resultReturn.setStatus(Constants.statusERROR);
 			}

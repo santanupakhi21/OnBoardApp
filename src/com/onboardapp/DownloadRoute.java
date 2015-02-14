@@ -44,7 +44,7 @@ public class DownloadRoute  extends Activity implements OnNotifyGetResponse{
 			@Override
 			public void onClick(View v) {
 //				AppUtil.route=route;
-//				startActivity(new Intent(ConfirmActivity.this,ActivityView1.class));
+				startActivity(new Intent(DownloadRoute.this,SignalActivity.class));
 				
 			}
 		});

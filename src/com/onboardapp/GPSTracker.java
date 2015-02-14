@@ -1,10 +1,13 @@
 package com.onboardapp;
 
+import com.onboardapp.util.AppUtil;
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.GpsStatus.Listener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -48,6 +51,8 @@ public class GPSTracker extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!isGPSEnabled && !isNetworkEnabled) {
                 // no network provider is enabled
+            	Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS );
+                AppUtil.context.startActivity(myIntent);
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
@@ -57,10 +62,15 @@ public class GPSTracker extends Service implements LocationListener {
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     Log.d("Network", "Network");
                     if (locationManager != null) {
-                        location = locationManager                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
+                            AppUtil.Lattitude=String.valueOf(latitude);
+                            AppUtil.Longitude=String.valueOf(longitude);
+                            
+                            AppUtil.SignalStrength=(int)location.getAccuracy();
+                            System.out.println("====accuracy : "+location.getAccuracy());
                             
                         }
                     }
@@ -72,16 +82,36 @@ public class GPSTracker extends Service implements LocationListener {
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//                        locationManager.getGpsStatus();
+                        /*locationManager.addGpsStatusListener(new Listener() {
+							
+							@Override
+							public void onGpsStatusChanged(int event) {
+								
+								
+							}
+						});*/
+                        
                         Log.d("GPS Enabled", "GPS Enabled");
                         if (locationManager != null) {
-                            location = locationManager                                   .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                AppUtil.Lattitude=String.valueOf(latitude);
+                                AppUtil.Longitude=String.valueOf(longitude);
+                                AppUtil.SignalStrength=(int)location.getAccuracy();
+                                
+                                System.out.println("====accuracy : "+location.getAccuracy());
+                                
                                 
                             }
                         }
                     }
+                }else
+                {
+                	Intent myIntent = new Intent( Settings.ACTION_SECURITY_SETTINGS );
+                    AppUtil.context.startActivity(myIntent);
                 }
             }
         } catch (Exception e) {
