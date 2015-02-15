@@ -80,9 +80,9 @@ public class AppUtil {
 		} catch (IOException e) {
 		e.printStackTrace();
 		}
-	    File file = new File(path);
-		MediaScannerConnection.scanFile(context, new String[]{file.getPath()}, null, null);
-		context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+//	    File file = new File(path);
+//		MediaScannerConnection.scanFile(context, new String[]{file.getPath()}, null, null);
+//		context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
 	
 	
 	}

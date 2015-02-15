@@ -155,7 +155,7 @@ public class ParseResponse {
 							jModel.setAtcoCode(jobj.optString("AtcoCode"));
 							jModel.setBearing(jobj.optString("Bearing"));
 							jModel.setIndicator(jobj.optString("Indicator"));
-							jModel.setLat(jobj.getJSONObject("Location").optString("Lattitude"));
+							jModel.setLat(jobj.getJSONObject("Location").optString("Latitude"));
 							jModel.setLng(jobj.getJSONObject("Location").optString("Longitude"));
 							jModel.setLocality(jobj.optString("Locality"));
 							jModel.setStopAlerts(jobj.optString("StopAlerts"));
