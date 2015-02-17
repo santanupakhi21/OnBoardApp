@@ -26,12 +26,15 @@ public class AppUtil {
 	public static GPSTracker track;
 	public static String route="";
 	public static String filepath=Environment.getExternalStorageDirectory()+"/data.txt";
-	
+	public static String prefVehicle="pref";
+	public static String vehicle="VEHICLE";
 	public static String status="404";
 	
 	public static ResultRoute rRoute=new ResultRoute();
 	
 	public static int SignalStrength=100;
+	
+	public static int Satellites=0;
 	
 	public static boolean internetOnline(Context c) {
 

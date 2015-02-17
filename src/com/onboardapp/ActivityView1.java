@@ -6,7 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +23,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,11 +35,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -71,6 +78,8 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 	TextView tvRouteName;
 	TextView tvOrigin;
 	TextView tvMcuAdvert;
+	TextView tvBannerHeader;
+	TextView tvBannerText;
 	 GoogleMap map;
 	 GoogleMap googleMap;
 	 ImageView imgAdvert;
@@ -91,8 +100,9 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 		Marker startMarker;
 		Marker endMarkar;
 //		ArrayList<Points> test = new ArrayList<Points>();
-	 
-	 
+		TextView tvTime;
+		private Handler handler = new Handler();
+//		handler.postDelayed(runnable, 100);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -100,14 +110,16 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.view2);
 //		intent.putExtra("BusHubRouteRef", rVehicle.cVehicleData.getBusHubRouteRef());
-//		busHubRouteRef=getIntent().getStringExtra("BusHubRouteRef");
+		busHubRouteRef=getIntent().getStringExtra("BusHubRouteRef");
 		
-		busHubRouteRef="292933";
+		System.out.println("====="+busHubRouteRef);
+		
+//		busHubRouteRef="292933";
 		
 		initialize();
 		getJourneyPattern();
 		displayMap();
-
+		
 	}
 	
 	private void initialize()
@@ -120,7 +132,11 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 		tvRouteName=(TextView)findViewById(R.id.tv_route_name);
 		tvOrigin=(TextView)findViewById(R.id.tv_origin);
 		tvMcuAdvert=(TextView)findViewById(R.id.tv_mcu_advert);
+		tvBannerHeader=(TextView)findViewById(R.id.tv_advert_header);
+		tvBannerText=(TextView)findViewById(R.id.tv_advert_text);
 		
+		tvTime=(TextView)findViewById(R.id.tv_time);
+		handler.postDelayed(runnable, 1000);
 		/*ListStop=new ArrayList<String>();
 		for(int i=0;i<10;i++)
 			ListStop.add("Stains");
@@ -182,6 +198,12 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 				}
 			}
 		}
+		
+		if(ListJourney.size()==0)
+		{
+			Toast.makeText(ActivityView1.this, "No matching route found for "+busHubRouteRef, Toast.LENGTH_SHORT).show();
+		}
+		
 		tvOrigin.setText(str_origin);
 		tvRouteName.setText(routeName);
 		tvMcuAdvert.setText(MCU_Advert.get(0).getDescription());
@@ -239,8 +261,8 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
             double latitude = AppUtil.track.getLatitude();
             double longitude = AppUtil.track.getLongitude();  
             		LatLng myloc=new LatLng(latitude, longitude);
-    		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc,
-    		            10));
+//    		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc,
+//    		            10));
     		
     		  googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker)));
     		 
@@ -255,6 +277,10 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
        
         ll_map.setVisibility(View.VISIBLE);
 		ll_advert.setVisibility(View.GONE);
+		
+		
+		
+		
 	}
 	
 	public void displayAd()
@@ -272,6 +298,8 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 			imageLoaderLast = new ImageLoaderPlayed(
 					ActivityView1.this);
 			imageLoaderLast.DisplayImage("http:"+Banner_Advert.get(aNumber).getImage(), imgAdvert);
+			tvBannerHeader.setText(Banner_Advert.get(aNumber).getTitle());
+			tvBannerText.setText(Banner_Advert.get(aNumber).getDescription());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -315,8 +343,8 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 //					 double latitude = AppUtil.Lattitude;
 //			            double longitude = AppUtil.track.getLongitude();  
 			            		LatLng myloc=new LatLng(Double.valueOf(AppUtil.Lattitude), Double.valueOf(AppUtil.Longitude));
-			    		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc,
-			    		            10));
+//			    		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myloc,
+//			    		            10));
 			    		
 //			    		  googleMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf(AppUtil.Lattitude), Double.valueOf(AppUtil.Longitude))).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker)));
 //			    		 googleMap.addMarker(new MarkerOptions().position(new LatLng(Double.valueOf("52.000"), Double.valueOf("51.000"))).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_marker)));
@@ -386,8 +414,31 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 				
 			}
 		});
+		 
+		 /*
+		 runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					ArrayList<LatLng>List=new ArrayList<LatLng>();
+					for(int i=(ListLatLng.size()-1);i>=0;i--)
+						List.add(ListLatLng.get(i));
+					 drawPathDrive(List);
+					
+				}
+			});*/
 		
-		
+		 /* Automatic zoom level */ 
+			LatLngBounds.Builder builder = new LatLngBounds.Builder();
+			for (LatLng m : ListLatLng) {
+			builder = builder.include(m);
+			}
+			LatLngBounds bounds = builder.build();
+			CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, this.getResources()
+			.getDisplayMetrics().widthPixels,
+			this.getResources().getDisplayMetrics().heightPixels, 50);
+//			 Move Camera 
+			googleMap.moveCamera(cu);
 		 ArrayList<LatLng>ListLatLngWalk2=new ArrayList<LatLng>();
 
 		 
@@ -412,8 +463,8 @@ public class ActivityView1 extends FragmentActivity implements OnNotifyGetRespon
 	
 		}
 		
-		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ListLatLng.get(0),
-				10));
+//		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ListLatLng.get(0),
+//				10));
 	}
 	
 	
@@ -607,7 +658,7 @@ private String downloadUrl(String strUrl) throws IOException{
 				googleMap.addPolyline(lineOptions);
 				
 				if(result.size()<1){
-					Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT);
 					return;
 				}
 			}
@@ -631,8 +682,34 @@ private String downloadUrl(String strUrl) throws IOException{
 
 	 }
 	
+	 private Runnable runnable = new Runnable() {
+		   @Override
+		   public void run() {
+		      /* do what you need to do */
+			  
+			   runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					 tvTime.setText(getClockTime());
+					
+				}
+			});
+		      /* and here comes the "trick" */
+		      handler.postDelayed(this, 1000);
+		   }
+		};
 	
-	
+	private String getClockTime()
+	{
+		String time="";
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat df3 = new SimpleDateFormat("HH:mm:ss");
+		String formattedDate3 = df3.format(c.getTime());
+		time=formattedDate3;
+		return time;
+		
+	}
 	
 	
 }

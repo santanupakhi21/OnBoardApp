@@ -93,6 +93,7 @@
                             android:background="@drawable/form_field_input"
                             android:ems="10"
                             android:hint="000-000-000-000"
+                            android:inputType="number"
                             android:padding="2dp"
                             android:textSize="10dp" />
 

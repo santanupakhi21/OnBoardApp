@@ -6,6 +6,7 @@ import com.onboardapp.util.MyLocationService;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -44,6 +46,10 @@ public class LoginActivity extends Activity{
 
 	LinearLayout ll_login;
 	boolean hasGps;
+	EditText etUser;
+	EditText etPass;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,12 +64,32 @@ public class LoginActivity extends Activity{
 	
 	private void initialize()
 	{
+		etUser=(EditText)findViewById(R.id.et_user);
+		etPass=(EditText)findViewById(R.id.et_pass);
 		ll_login=(LinearLayout)findViewById(R.id.ll_login);
+		
+		
 		ll_login.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(LoginActivity.this,AsignCodeActivity.class));
+				
+				
+				if(etUser.getText().toString().trim().equals("") || etPass.getText().toString().trim().equals(""))
+					Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+				else if(etUser.getText().toString().trim().equals("AbellioOnBoard") && etPass.getText().toString().trim().equals("RiseDigitalMedia"))
+				{	
+					if(getdata(AppUtil.prefVehicle, AppUtil.vehicle).length()<1)
+						startActivity(new Intent(LoginActivity.this,AsignCodeActivity.class));
+					else
+					{
+						AppUtil.route=getdata(AppUtil.prefVehicle, AppUtil.vehicle);
+						startActivity(new Intent(LoginActivity.this,ActivityEngineerOption.class));
+					}
+						
+				}
+				else
+					Toast.makeText(LoginActivity.this, "Please enter correct username and password", Toast.LENGTH_SHORT).show();
 				
 			}
 		});
@@ -104,5 +130,37 @@ public class LoginActivity extends Activity{
 	    }
 	}
 
+	private void storedata(String prefUser, String name, String value) {
+
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString(name, value);
+		editor.commit();
+
+	}
+
+	private String getdata(String prefUser, String name) {
+
+		String value = "";
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+
+		value = settings.getString(name, "");
+		return value;
+
+	}
+
+	private void clearMemory(String prefUser)
+
+	{
+
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+
+		SharedPreferences.Editor editor = settings.edit();
+
+		editor.clear();
+
+		editor.commit();
+
+	}
 	
 }

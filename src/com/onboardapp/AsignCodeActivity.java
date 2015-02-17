@@ -51,6 +51,8 @@ public class AsignCodeActivity extends Activity implements OnNotifyGetResponse{
 			@Override
 			public void onClick(View v) {
 				
+				if(etCode.getText().toString().trim().length()>0)
+					route=etCode.getText().toString();
 				
 				Intent intent=new Intent(AsignCodeActivity.this,ConfirmActivity.class);
 				intent.putExtra("route", route);

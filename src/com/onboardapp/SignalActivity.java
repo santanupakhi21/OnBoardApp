@@ -45,12 +45,12 @@ public class SignalActivity  extends Activity implements OnNotifyGetResponse{
 		tvSignal=(TextView)findViewById(R.id.tv_signal);
 		
 		if (AppUtil.Lattitude.length()<2) {
-			if (AppUtil.SignalStrength > 100) {
+			if (AppUtil.Satellites <= 10) {
 				//poor
 				SIGNAL=0;
 				displaySignal(SIGNAL);
 				
-			} else if (AppUtil.SignalStrength  < 100 && AppUtil.SignalStrength  > 60) {
+			} else if (AppUtil.Satellites  > 10 && AppUtil.Satellites  < 30) {
 				//average
 				SIGNAL=1;
 				displaySignal(SIGNAL);
@@ -63,7 +63,22 @@ public class SignalActivity  extends Activity implements OnNotifyGetResponse{
 		}else
 		{
 			//good
-			SIGNAL=2;
+//			SIGNAL=2;
+			if (AppUtil.Satellites <= 10) {
+				//poor
+				SIGNAL=0;
+				displaySignal(SIGNAL);
+				
+			} else if (AppUtil.Satellites  > 10 && AppUtil.Satellites  < 30) {
+				//average
+				SIGNAL=1;
+				displaySignal(SIGNAL);
+				
+			} else {
+				//Good
+				SIGNAL=2;
+				displaySignal(SIGNAL);
+			}
 			displaySignal(SIGNAL);
 			if (AppUtil.internetOnline(SignalActivity.this)) {
 			String url=Constants.URL_CONFIRM_VEHICLE+AppUtil.route+"&latitude=52.000&longitude=51.000";

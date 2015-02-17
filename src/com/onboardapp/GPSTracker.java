@@ -55,7 +55,7 @@ public class GPSTracker extends Service implements LocationListener {
                 AppUtil.context.startActivity(myIntent);
             } else {
                 this.canGetLocation = true;
-                if (isNetworkEnabled) {
+               /* if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
@@ -68,13 +68,13 @@ public class GPSTracker extends Service implements LocationListener {
                             longitude = location.getLongitude();
                             AppUtil.Lattitude=String.valueOf(latitude);
                             AppUtil.Longitude=String.valueOf(longitude);
-                            
+                            System.out.println("====Satelites : "+  location.getExtras().getInt("satellites")) ;
                             AppUtil.SignalStrength=(int)location.getAccuracy();
                             System.out.println("====accuracy : "+location.getAccuracy());
                             
                         }
                     }
-                }
+                }*/
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
@@ -102,6 +102,8 @@ public class GPSTracker extends Service implements LocationListener {
                                 AppUtil.Longitude=String.valueOf(longitude);
                                 AppUtil.SignalStrength=(int)location.getAccuracy();
                                 
+                                System.out.println("====Satelites : "+  location.getExtras().getInt("satellites")) ;
+                                
                                 System.out.println("====accuracy : "+location.getAccuracy());
                                 
                                 
@@ -110,7 +112,7 @@ public class GPSTracker extends Service implements LocationListener {
                     }
                 }else
                 {
-                	Intent myIntent = new Intent( Settings.ACTION_SECURITY_SETTINGS );
+                	Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS );
                     AppUtil.context.startActivity(myIntent);
                 }
             }

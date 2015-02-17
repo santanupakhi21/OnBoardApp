@@ -55,6 +55,7 @@
         <activity android:name="ActivityView1" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="ActivityView2" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="ActivityView3" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="ActivityEngineerOption" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation"></activity>
         
  <activity android:name="com.onboardapp.gps.BluetoothGpsActivity"
                   

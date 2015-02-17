@@ -9,6 +9,7 @@ import com.onboardapp.util.Constants;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.TextureView;
@@ -44,6 +45,7 @@ public class ConfirmActivity extends Activity implements OnNotifyGetResponse{
 			@Override
 			public void onClick(View v) {
 				AppUtil.route=route;
+				storedata(AppUtil.prefVehicle, AppUtil.vehicle, route);
 				startActivity(new Intent(ConfirmActivity.this,DownloadRoute.class));
 				
 			}
@@ -60,4 +62,39 @@ public class ConfirmActivity extends Activity implements OnNotifyGetResponse{
 		ResultConfirmVehicleData rVehicle=(ResultConfirmVehicleData)result;
 		tvVehicle.setText(rVehicle.cVehicleData.getBusHubRouteRef());
 	}
+	
+	
+	private void storedata(String prefUser, String name, String value) {
+
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString(name, value);
+		editor.commit();
+
+	}
+
+	private String getdata(String prefUser, String name) {
+
+		String value = "";
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+
+		value = settings.getString(name, "");
+		return value;
+
+	}
+
+	private void clearMemory(String prefUser)
+
+	{
+
+		SharedPreferences settings = getSharedPreferences(prefUser, 0);
+
+		SharedPreferences.Editor editor = settings.edit();
+
+		editor.clear();
+
+		editor.commit();
+
+	}
+	
 }

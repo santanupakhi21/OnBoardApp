@@ -89,6 +89,22 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="18" >
+
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="12:50:06"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18dp" />
+
+                </FrameLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -171,6 +187,33 @@
                         android:src="@drawable/avatar_loading" 
                         android:layout_gravity="center"
                         android:scaleType="fitXY"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/tv_advert_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" 
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="22dp"/>
+
+                        <TextView
+                           android:id="@+id/tv_advert_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="TextView"
+                            android:textColor="#FFFFFF" 
+                            android:textSize="18dp"/>
+
+                    </LinearLayout>
 
                 </FrameLayout>
 
